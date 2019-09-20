@@ -5,7 +5,7 @@ to deal with [NixNote2](https://github.com/baumgarr/nixnote2). If you are on
 Linux this might be more useful than the original EverOrg project because there
 are no official Evernote desktop client on Linux. Unofficial client is NixNote2
 that has slightly different export format (nnex). The good news is that you can
-automate all of the steps to have a simple export script.
+automate the steps as a simple non interactive script.
 
 ## Prerequisites
 
