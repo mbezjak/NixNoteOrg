@@ -10,7 +10,7 @@ automate all of the steps to have a simple export script.
 ## Prerequisites
 
 1. [NixNote2](http://www.nixnote.org/) should be installed and logged in to Evernote.
-2. go compiler should be in your path
+2. go compiler should be in your $PATH
 
 ## How to use
 
