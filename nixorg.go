@@ -27,6 +27,7 @@ type Node struct {
 type Nodes []Node
 
 type Note struct {
+	Guid       string   `xml:"Guid"`
 	Title      string   `xml:"Title"`
 	Content    string   `xml:"Content"`
 	Created    string   `xml:"Created"`
@@ -348,6 +349,17 @@ func (note Note) orgProperties() string {
 	}
 	if attr.SourceUrl != "" {
 		result.WriteString("#+DESCRIPTION: " + attr.SourceUrl + "\n")
+	}
+	if note.Guid != "" {
+		// This is very hacky. This link works for now (and for me). Those
+		// hardcoded parameters are not documented anywhere so I don't know for
+		// how long this could work or if it'll work in any situation.
+		// There is a "copy link" in evernote web, but the needed info is not
+		// part of nnex files so we cannot produce it.
+		// Note: evernote will correct query parameter `s` with correct value.
+		result.WriteString("#+EVERNOTE_URL: https://evernote.com/Home.action#n=" +
+			note.Guid +
+			"&s=s1&ses=4&sh=2\n")
 	}
 
 	return result.String()
