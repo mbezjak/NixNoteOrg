@@ -6,15 +6,14 @@ import (
 	"encoding/xml"
 	"flag"
 	"fmt"
+	"golang.org/x/net/html"
 	"io"
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"time"
-
-	"golang.org/x/net/html"
-	"strconv"
 )
 
 type Query struct {
