@@ -38,8 +38,8 @@ type Note struct {
 		Author    string  `xml:"Author"`
 		Latitude  float64 `xml:"Latitude"`
 		Longitude float64 `xml:"Longitude"`
-		Source    string `xml:"Source"`
-		SourceUrl string `xml:"SourceUrl"`
+		Source    string  `xml:"Source"`
+		SourceUrl string  `xml:"SourceUrl"`
 	} `xml:"Attributes"`
 
 	Resources []Resource `xml:"NoteResource"`
@@ -49,7 +49,7 @@ type Resource struct {
 	Mime string `xml:"Mime"`
 	Data struct {
 		Content  string `xml:"Body"`
-		Hash string `xml:"BodyHash"`
+		Hash     string `xml:"BodyHash"`
 		Encoding string `xml:"encoding,attr"`
 	} `xml:"Data"`
 	ResourceAttributes struct {
@@ -307,14 +307,18 @@ func main() {
 				attachments[attachment.Data.Hash] = attachment.ResourceAttributes.FileName
 				sDec, _ := hex.DecodeString(attachment.Data.Content)
 				err := ioutil.WriteFile(attachmentPath+"/"+attachment.ResourceAttributes.FileName, sDec, 0644)
-				if err != nil { panic(err) }
+				if err != nil {
+					panic(err)
+				}
 				attachmentsCount++
 			}
 		}
 
 		noteFileName := sanitize(note.Title) + ".org"
 		newFile, err := os.Create(filepath.Join(newWrittenDir, noteFileName))
-		if err != nil { panic(err) }
+		if err != nil {
+			panic(err)
+		}
 		_, _ = newFile.WriteString(note.orgProperties())
 		_, _ = newFile.WriteString(nodes.orgFormat())
 		_ = newFile.Close()
@@ -341,8 +345,10 @@ func (note Note) orgProperties() string {
 	}
 	if note.Created != "" {
 		c, err := strconv.ParseInt(note.Created, 10, 64)
-		if err != nil { panic(err) }
-		result.WriteString("#+DATE: " + time.Unix(c / 1000, 0).String() + "\n")
+		if err != nil {
+			panic(err)
+		}
+		result.WriteString("#+DATE: " + time.Unix(c/1000, 0).String() + "\n")
 	}
 	if attr.Latitude > 0 {
 		result.WriteString(fmt.Sprintf("#+LAT: %f\n", attr.Latitude))
