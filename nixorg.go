@@ -11,8 +11,10 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 
 	"golang.org/x/net/html"
+	"strconv"
 )
 
 type Query struct {
@@ -338,7 +340,9 @@ func (note Note) orgProperties() string {
 		result.WriteString(strings.Join(note.Tags, " ") + "\n")
 	}
 	if note.Created != "" {
-		result.WriteString("#+DATE: " + note.Created + "\n")
+		c, err := strconv.ParseInt(note.Created, 10, 64)
+		if err != nil { panic(err) }
+		result.WriteString("#+DATE: " + time.Unix(c / 1000, 0).String() + "\n")
 	}
 	if attr.Latitude > 0 {
 		result.WriteString(fmt.Sprintf("#+LAT: %f\n", attr.Latitude))
