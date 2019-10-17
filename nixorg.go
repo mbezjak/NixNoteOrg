@@ -6,6 +6,7 @@ import (
 	"encoding/xml"
 	"flag"
 	"fmt"
+	"github.com/mitchellh/go-wordwrap"
 	"golang.org/x/net/html"
 	"io"
 	"io/ioutil"
@@ -230,7 +231,7 @@ func (nodes Nodes) orgFormat() string {
 			}
 
 		case html.TextToken:
-			value.WriteString(html.UnescapeString(node.Token.String()))
+			value.WriteString(wordwrap.WrapString(html.UnescapeString(node.Token.String()), 80))
 		}
 	}
 
