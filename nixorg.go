@@ -170,7 +170,7 @@ func (nodes Nodes) orgFormat() string {
 				listValue = append(listValue, 0)
 			case "li":
 				value.WriteString("\n")
-				for i := 0; i <= list; i++ {
+				for i := 0; i < list-1; i++ {
 					value.WriteString("  ")
 				}
 				if list > 0 {
@@ -178,7 +178,7 @@ func (nodes Nodes) orgFormat() string {
 					case 0:
 						value.WriteString("- ")
 					default:
-						value.WriteString(fmt.Sprintf("%d.", listValue[list-1]))
+						value.WriteString(fmt.Sprintf("%d. ", listValue[list-1]))
 						listValue[list-1] = listValue[list-1] + 1
 					}
 				}
@@ -221,6 +221,7 @@ func (nodes Nodes) orgFormat() string {
 			case "ol", "ul":
 				list--
 				listValue = listValue[:len(listValue)-1]
+				value.WriteString("\n")
 			case "code", "tt", "kbd":
 				if !insidePre {
 					value.WriteString("~")
