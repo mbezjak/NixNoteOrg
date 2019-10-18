@@ -198,6 +198,8 @@ func (nodes Nodes) orgFormat() string {
 
 		case html.EndTagToken:
 			switch node.Token.Data {
+			case "p":
+				value.WriteString("\n")
 			case "u":
 				value.WriteString("_")
 			case "i":
