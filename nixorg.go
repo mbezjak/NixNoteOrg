@@ -58,9 +58,8 @@ type Resource struct {
 }
 
 var (
-	readFile       = ""
-	attachmentPath = ""
-	attachments    = make(map[string]string)
+	readFile    = ""
+	attachments = make(map[string]string)
 )
 
 func getAttr(attribute string, token html.Token) string {
@@ -89,8 +88,7 @@ func (nodes Nodes) orgFormat() string {
 
 			case "en-media":
 				value.WriteString("\n")
-				value.WriteString("[[./" + filepath.Base(attachmentPath) + "/")
-				value.WriteString(attachments[getAttr("hash", node.Token)] + "]]")
+				value.WriteString("[[attachment:" + attachments[getAttr("hash", node.Token)] + "]]")
 
 			case "en-todo":
 				switch getAttr("checked", node.Token) {
@@ -156,8 +154,7 @@ func (nodes Nodes) orgFormat() string {
 				value.WriteString("\n------------------------------------\n")
 			case "en-media":
 				value.WriteString("\n")
-				value.WriteString("[[./" + filepath.Base(attachmentPath) + "/")
-				value.WriteString(attachments[getAttr("hash", node.Token)] + "]]")
+				value.WriteString("[[attachment:" + attachments[getAttr("hash", node.Token)] + "]]")
 			case "table":
 				table++
 			case "td":
@@ -298,9 +295,12 @@ func main() {
 
 		if len(note.Resources) != 0 {
 			// Create Attachments Directory if not exists
-			attachmentPath = filepath.Join(newWrittenDir, sanitize(note.Title))
+			attachmentPath := filepath.Join(newWrittenDir, "data", note.Guid[0:2], note.Guid[2:])
 			if _, err = os.Stat(attachmentPath); os.IsNotExist(err) {
-				_ = os.Mkdir(attachmentPath, 0711)
+				err = os.MkdirAll(attachmentPath, 0711)
+				if err != nil {
+					panic(err)
+				}
 			}
 
 			for _, attachment := range note.Resources {
@@ -337,6 +337,7 @@ func (note Note) orgProperties() string {
 	attr := note.Attributes
 
 	result.WriteString("#+TITLE: " + note.Title + "\n")
+	result.WriteString("#+ID: " + note.Guid + "\n")
 	result.WriteString("#+STARTUP: showall" + "\n")
 
 	if attr.Author != "" {
