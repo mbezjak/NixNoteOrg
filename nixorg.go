@@ -88,7 +88,7 @@ func (nodes Nodes) orgFormat() string {
 
 			case "en-media":
 				value.WriteString("\n")
-				value.WriteString("[[attachment:" + attachments[getAttr("hash", node.Token)] + "]]")
+				value.WriteString("[[file:" + attachments[getAttr("hash", node.Token)] + "]]")
 
 			case "en-todo":
 				switch getAttr("checked", node.Token) {
@@ -154,7 +154,7 @@ func (nodes Nodes) orgFormat() string {
 				value.WriteString("\n------------------------------------\n")
 			case "en-media":
 				value.WriteString("\n")
-				value.WriteString("[[attachment:" + attachments[getAttr("hash", node.Token)] + "]]")
+				value.WriteString("[[file:" + attachments[getAttr("hash", node.Token)] + "]]")
 			case "table":
 				table++
 			case "td":
@@ -307,7 +307,8 @@ func main() {
 				if attachment.ResourceAttributes.FileName == "" {
 					attachment.ResourceAttributes.FileName = attachment.Data.Hash
 				}
-				attachments[attachment.Data.Hash] = attachment.ResourceAttributes.FileName
+				attachments[attachment.Data.Hash] = filepath.Join("data", note.Guid[0:2], note.Guid[2:],
+					attachment.ResourceAttributes.FileName)
 				sDec, _ := hex.DecodeString(attachment.Data.Content)
 				err := ioutil.WriteFile(attachmentPath+"/"+attachment.ResourceAttributes.FileName, sDec, 0644)
 				if err != nil {
