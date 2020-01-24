@@ -117,9 +117,9 @@ func (nodes Nodes) orgFormat() string {
 				value.WriteString("\n")
 			case "u":
 				value.WriteString("_")
-			case "i":
+			case "i", "em":
 				value.WriteString("/")
-			case "b", "strong", "em":
+			case "b", "strong":
 				value.WriteString("*")
 			case "del":
 				value.WriteString("+")
@@ -199,9 +199,9 @@ func (nodes Nodes) orgFormat() string {
 				value.WriteString("\n")
 			case "u":
 				value.WriteString("_")
-			case "i":
+			case "i", "em":
 				value.WriteString("/")
-			case "b", "strong", "em":
+			case "b", "strong":
 				value.WriteString("*")
 			case "del":
 				value.WriteString("+")
