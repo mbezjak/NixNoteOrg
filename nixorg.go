@@ -340,7 +340,7 @@ func (note Note) orgProperties() string {
 	result.WriteString("#+TITLE: " + note.Title + "\n")
 	result.WriteString("#+ID: " + note.Guid + "\n")
 	result.WriteString("#+STARTUP: showall" + "\n")
-	result.WriteString("#+OPTIONS: toc:nil" + "\n")
+	result.WriteString("#+OPTIONS: toc:nil num:nil" + "\n")
 
 	if attr.Author != "" {
 		result.WriteString("#+AUTHOR: " + attr.Author + "\n")
