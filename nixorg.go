@@ -372,7 +372,7 @@ func (note Note) orgProperties() string {
 		// how long this could work or if it'll work in any situation.
 		// There is a "copy link" in evernote web, but the needed info is not
 		// part of nnex files so we cannot produce it.
-		// Note: evernote will correct query parameter `s` with correct value.
+		// Note: evernote will fix query parameter `s` with correct value.
 		result.WriteString("#+EVERNOTE_URL: https://evernote.com/Home.action#n=" +
 			note.Guid +
 			"&s=s1&ses=4&sh=2\n")
