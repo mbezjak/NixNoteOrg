@@ -377,6 +377,7 @@ func (note Note) orgProperties() string {
 			note.Guid +
 			"&s=s1&ses=4&sh=2\n")
 	}
+	result.WriteString("#+ORGMODE_EXPORT_URL: [[file:" + sanitize(note.Title) + ".html]]")
 
 	return result.String()
 }
