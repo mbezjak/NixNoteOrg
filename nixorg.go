@@ -35,7 +35,6 @@ type Note struct {
 	Created    string   `xml:"Created"`
 	Tags       []string `xml:"Tag"`
 	Attributes struct {
-		Author    string  `xml:"Author"`
 		Latitude  float64 `xml:"Latitude"`
 		Longitude float64 `xml:"Longitude"`
 		Source    string  `xml:"Source"`
@@ -342,9 +341,6 @@ func (note Note) orgProperties() string {
 	result.WriteString("#+STARTUP: showall" + "\n")
 	result.WriteString("#+OPTIONS: toc:nil num:nil" + "\n")
 
-	if attr.Author != "" {
-		result.WriteString("#+AUTHOR: " + attr.Author + "\n")
-	}
 	if len(note.Tags) > 0 {
 		result.WriteString("#+TAGS: ")
 		result.WriteString(strings.Join(note.Tags, " ") + "\n")
