@@ -340,6 +340,7 @@ func (note Note) orgProperties() string {
 	result.WriteString("#+ID: " + note.Guid + "\n")
 	result.WriteString("#+STARTUP: showall" + "\n")
 	result.WriteString("#+OPTIONS: toc:nil num:nil" + "\n")
+	result.WriteString("#+HTML_HEAD_EXTRA: <link rel=\"stylesheet\" type=\"text/css\" href=\"extra.css\" />" + "\n")
 
 	if len(note.Tags) > 0 {
 		result.WriteString("#+TAGS: ")
