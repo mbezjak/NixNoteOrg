@@ -293,7 +293,7 @@ func main() {
 
 		if len(note.Resources) != 0 {
 			// Create Attachments Directory if not exists
-			attachmentPath := filepath.Join(newWrittenDir, "data", note.Guid[0:2], note.Guid[2:])
+			attachmentPath := filepath.Join(newWrittenDir, sanitize(note.Title))
 			if _, err = os.Stat(attachmentPath); os.IsNotExist(err) {
 				err = os.MkdirAll(attachmentPath, 0711)
 				if err != nil {
@@ -305,7 +305,7 @@ func main() {
 				if attachment.ResourceAttributes.FileName == "" {
 					attachment.ResourceAttributes.FileName = attachment.Data.Hash
 				}
-				attachments[attachment.Data.Hash] = filepath.Join("data", note.Guid[0:2], note.Guid[2:],
+				attachments[attachment.Data.Hash] = filepath.Join(sanitize(note.Title),
 					attachment.ResourceAttributes.FileName)
 				sDec, _ := hex.DecodeString(attachment.Data.Content)
 				err := ioutil.WriteFile(attachmentPath+"/"+attachment.ResourceAttributes.FileName, sDec, 0644)
@@ -336,7 +336,6 @@ func (note Note) orgProperties() string {
 	attr := note.Attributes
 
 	result.WriteString("#+TITLE: " + note.Title + "\n")
-	result.WriteString("#+ID: " + note.Guid + "\n")
 	result.WriteString("#+STARTUP: showall" + "\n")
 	result.WriteString("#+OPTIONS: toc:nil num:nil" + "\n")
 	result.WriteString("#+HTML_HEAD_EXTRA: <link rel=\"stylesheet\" type=\"text/css\" href=\"extra.css\" />" + "\n")
