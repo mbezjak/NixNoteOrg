@@ -37,7 +37,6 @@ type Note struct {
 	Attributes struct {
 		Latitude  float64 `xml:"Latitude"`
 		Longitude float64 `xml:"Longitude"`
-		Source    string  `xml:"Source"`
 		SourceUrl string  `xml:"SourceUrl"`
 	} `xml:"Attributes"`
 
@@ -356,9 +355,6 @@ func (note Note) orgProperties() string {
 	if attr.Latitude > 0 {
 		result.WriteString(fmt.Sprintf("#+LAT: %f\n", attr.Latitude))
 		result.WriteString(fmt.Sprintf("#+LON: %f\n", attr.Longitude))
-	}
-	if attr.Source != "" {
-		result.WriteString("#+SOURCE: " + attr.Source + "\n")
 	}
 	if attr.SourceUrl != "" {
 		result.WriteString("#+DESCRIPTION: " + attr.SourceUrl + "\n")
